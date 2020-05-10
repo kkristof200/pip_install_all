@@ -1,0 +1,81 @@
+#!/usr/bin/env python3
+
+
+# IMPORTS
+import os, sys
+
+
+# DEFAULT AND OPTIONAL COMMAND LINE ARGUMENTS
+pip_cmd = 'pip3'
+
+if len(sys.argv) > 1:
+    pip_cmd = sys.argv[1]
+
+
+# FUNCTIONS
+def sh(cmd):
+    import subprocess
+
+    return subprocess.getstatusoutput(cmd)
+
+def is_installed(pip: str, package_name: str) -> bool:
+    return 'not found' not in sh(pip + ' show ' + package_name)[1]
+
+def install(pip: str, package_name: str) -> str:
+    return sh(pip + ' install ' + package_name)
+
+
+# PATHS
+current_folder_path = os.getcwd()
+requirements_path = os.path.join(os.getcwd(), 'requirements.txt')
+
+
+# OPTIONALLY INSTALLING PIPREQS
+pipreqs = 'pipreqs'
+
+if not is_installed(pip_cmd, pipreqs):
+    print(install(pip_cmd, pipreqs)[1])
+
+
+# RUNNING PIPREQS
+print('Checking for packages in:', current_folder_path)
+print(sh(pipreqs + ' --force ' + current_folder_path)[1])
+
+
+# INSTALLING FOUND PACKAGES
+packages_to_install = []
+with open(requirements_path, 'r') as f:
+    for line in f.readlines():
+        package_name = line.strip().split('==')[0]
+
+        if not is_installed(pip_cmd, package_name):
+            packages_to_install.append(package_name)
+            print('Missing:          ', package_name)
+        else:
+            print('Already installed:', package_name)
+
+failed_to_install_packages = []
+successfully_installed_packages = []
+
+if len(packages_to_install) > 0:
+    print('The following packages will be installed:', packages_to_install)
+
+    for package_name in packages_to_install:
+        status, msg = install(pip_cmd, package_name)
+
+        print(msg)
+
+        if status == 0:
+            successfully_installed_packages.append(package_name)
+        else:
+            failed_to_install_packages.append(package_name)
+
+    if len(successfully_installed_packages) > 0:
+        print('Successfully installed:', successfully_installed_packages)
+
+    if len(failed_to_install_packages) > 0:
+        print('Failed to install:     ', failed_to_install_packages)
+
+
+# CLEANUP
+os.remove(requirements_path)
