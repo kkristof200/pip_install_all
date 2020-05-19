@@ -3,9 +3,10 @@
 ## What does it do
 Installs all missing python packages from a directory
 
-## Setup
-1. Move pip_install_all to /usr/local/bin (or any  other forder added to your $PATH)
-2. Might need to run 'chmod u+x pip_install_all'
+## Install
+~~~~
+cd /usr/local/bin && wget https://raw.githubusercontent.com/kkristof200/pip_install_all/master/pip_install_all && chmod u+x pip_install_all
+~~~~
 
 ## Usage
 1. Navigate to folder where your repo is cloned
