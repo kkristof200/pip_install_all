@@ -4,8 +4,10 @@
 Installs all missing python packages from a directory
 
 ## Install
-~~~~
-cd /usr/local/bin && wget https://raw.githubusercontent.com/kkristof200/pip_install_all/master/pip_install_all && chmod u+x pip_install_all
+~~~~shell
+wget https://raw.githubusercontent.com/kkristof200/pip_install_all/master/pip_install_all -O /usr/local/bin/pip_install_all && chmod u+x /usr/local/bin/pip_install_all
+# or
+curl https://raw.githubusercontent.com/kkristof200/pip_install_all/master/pip_install_all > /usr/local/bin/pip_install_all && chmod u+x /usr/local/bin/pip_install_all
 ~~~~
 
 ## Usage
