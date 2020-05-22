@@ -43,7 +43,7 @@ requirements_path = os.path.join(os.getcwd(), 'requirements.txt')
 pipreqs = 'pipreqs'
 
 if upgrade or not is_installed(pip_cmd, pipreqs):
-    print(install(pip_cmd, pipreqs, upgrade)[1])
+    print(install(pip_cmd, pipreqs, False)[1])
 
 
 # RUNNING PIPREQS
