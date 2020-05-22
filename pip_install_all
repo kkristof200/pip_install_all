@@ -30,6 +30,7 @@ def install(pip: str, package_name: str, upgrade: bool) -> str:
         cmd += ' --upgrade'
     
     cmd += ' ' + package_name
+    print(cmd)
     
     return sh(cmd)
 
