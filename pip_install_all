@@ -11,7 +11,7 @@ upgrade = '-u' in sys_args or '--upgrade' in sys_args
 pip_cmd = 'pip3'
 
 if 'pip' in sys.argv:
-    pip_cmd = sys.argv[1]
+    pip_cmd = 'pip'
 
 
 # FUNCTIONS
