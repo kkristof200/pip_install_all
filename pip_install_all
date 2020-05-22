@@ -4,6 +4,8 @@
 # IMPORTS
 import os, sys
 
+sys_args = sys.argv
+upgrade = '-u' in sys_args or '--upgrade' in sys_args
 
 # DEFAULT AND OPTIONAL COMMAND LINE ARGUMENTS
 pip_cmd = 'pip3'
@@ -21,8 +23,15 @@ def sh(cmd):
 def is_installed(pip: str, package_name: str) -> bool:
     return 'not found' not in sh(pip + ' show ' + package_name)[1]
 
-def install(pip: str, package_name: str) -> str:
-    return sh(pip + ' install ' + package_name)
+def install(pip: str, package_name: str, upgrade: bool) -> str:
+    cmd = pip + ' install'
+
+    if upgrade:
+        cmd += ' --upgrade'
+    
+    cmd += ' ' + package_name
+    
+    return sh(cmd)
 
 
 # PATHS
@@ -34,7 +43,7 @@ requirements_path = os.path.join(os.getcwd(), 'requirements.txt')
 pipreqs = 'pipreqs'
 
 if not is_installed(pip_cmd, pipreqs):
-    print(install(pip_cmd, pipreqs)[1])
+    print(install(pip_cmd, pipreqs, upgrade)[1])
 
 
 # RUNNING PIPREQS
@@ -61,7 +70,7 @@ if len(packages_to_install) > 0:
     print('The following packages will be installed:', packages_to_install)
 
     for package_name in packages_to_install:
-        status, msg = install(pip_cmd, package_name)
+        status, msg = install(pip_cmd, package_name, upgrade)
 
         print(msg)
 
