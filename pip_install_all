@@ -5,7 +5,7 @@
 import os, sys
 
 sys_args = sys.argv
-upgrade = '-u' in sys_args or '-u' in sys_args
+upgrade = '-u' in sys_args or '--upgrade' in sys_args
 
 # DEFAULT AND OPTIONAL COMMAND LINE ARGUMENTS
 pip_cmd = 'pip3'
@@ -27,7 +27,7 @@ def install(pip: str, package_name: str, upgrade: bool) -> str:
     cmd = pip + ' install'
 
     if upgrade:
-        cmd += ' -u'
+        cmd += ' --upgrade'
     
     cmd += ' ' + package_name
     print('cmd', cmd)
