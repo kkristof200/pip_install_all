@@ -10,7 +10,7 @@ upgrade = '-u' in sys_args or '--upgrade' in sys_args
 # DEFAULT AND OPTIONAL COMMAND LINE ARGUMENTS
 pip_cmd = 'pip3'
 
-if len(sys.argv) > 1:
+if 'pip' in sys.argv:
     pip_cmd = sys.argv[1]
 
 
