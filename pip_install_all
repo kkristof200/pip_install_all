@@ -42,7 +42,7 @@ requirements_path = os.path.join(os.getcwd(), 'requirements.txt')
 # OPTIONALLY INSTALLING PIPREQS
 pipreqs = 'pipreqs'
 
-if not is_installed(pip_cmd, pipreqs):
+if upgrade or not is_installed(pip_cmd, pipreqs):
     print(install(pip_cmd, pipreqs, upgrade)[1])
 
 
@@ -57,11 +57,14 @@ with open(requirements_path, 'r') as f:
     for line in f.readlines():
         package_name = line.strip().split('==')[0]
 
-        if not is_installed(pip_cmd, package_name):
+        if upgrade:
             packages_to_install.append(package_name)
-            print('Missing:          ', package_name)
+            print('Will try to update:', package_name)
+        elif not is_installed(pip_cmd, package_name):
+            packages_to_install.append(package_name)
+            print('Missing:           ', package_name)
         else:
-            print('Already installed:', package_name)
+            print('Already installed: ', package_name)
 
 failed_to_install_packages = []
 successfully_installed_packages = []
